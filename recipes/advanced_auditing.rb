@@ -11,6 +11,14 @@
 #V-73455 - special logon
 #V-73457, V-73459 - removable storage
 #V-73461, V-73463 - audit policy change
+#V-73465 - authentication policy change
+#V-73467 - authroization policy change
+#V-73469, V-73471 - sensitive privilege use
+#V-73473, V-73475 - Ipsec Driver
+#V-73477, V-73479 - other system events
+#V-73481 - security state change
+#V-73483 - security system extension
+#V-73489, V-73491 - system integrity
 
 powershell_script 'V-1113, V-1114' do
   code <<-EOH

@@ -965,3 +965,162 @@ registry_key "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\mrxsmb10"
   action :create
 end
 
+#V-73499
+registry_key "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\Tcpip6\\Parameters" do
+  values [{
+    name: 'DisableIPSourceRouting',
+    type: :dword,
+    data: 2
+  }]
+  action :create
+end
+
+#V-73507
+registry_key "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\LanmanWorkstation" do
+  values [{
+    name: 'AllowInsecureGuestAuth',
+    type: :dword,
+    data: 0
+  }]
+  action :create
+end
+
+#V-73513 (only for domain joined systems)
+registry_key "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard" do
+  values [{
+    name: 'EnableVirtualizationBasedSecurity',
+    type: :dword,
+    data: 1
+  }]
+  action :create
+end
+
+#V-73513 (only for domain joined systems)
+registry_key "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard" do
+  values [{
+    name: 'RequirePlatformSecurityFeatures',
+    type: :dword,
+    data: 3
+  }]
+  action :create
+end
+
+#V-73515 (only for domain joined systems)
+registry_key "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard" do
+  values [{
+    name: 'LsaCfgFlags',
+    type: :dword,
+    data: 1
+  }]
+  action :create
+end
+
+#V-73517 (only for domain joined systems)
+registry_key "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard" do
+  values [{
+    name: 'HypervisorEnforcedCodeIntegrity',
+    type: :dword,
+    data: 1
+  }]
+  action :create
+end
+
+#V-73533 (only for member servers)
+registry_key "HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\System" do
+  values [{
+    name: 'EnumerateLocalUsers',
+    type: :dword,
+    data: 0
+  }]
+  action :create
+end
+
+#V-73551 
+registry_key "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection" do
+  values [{
+    name: 'NoDriveTypeAutoRun',
+    type: :dword,
+    data: 0
+  }]
+  action :create
+end
+
+#V-73559
+registry_key "HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\System" do
+  values [{
+    name: 'EnableSmartScreen',
+    type: :dword,
+    data: 1
+  }]
+  action :create
+end
+
+#V-73573
+registry_key "HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows NT\\Terminal Services" do
+  values [{
+    name: 'fEncryptRPCTraffic',
+    type: :dword,
+    data: 1
+  }]
+  action :create
+end
+
+#V-73581
+registry_key "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search" do
+  values [{
+    name: 'AllowIndexingEncryptedStoresOrItems',
+    type: :dword,
+    data: 0
+  }]
+  action :create
+end
+
+#V-73591
+registry_key "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\PowerShell\\ScriptBlockLogging" do
+  values [{
+    name: 'EnableScriptBlockLogging',
+    type: :dword,
+    data: 1
+  }]
+  action :create
+end
+
+#V-73601
+registry_key "HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\WinRM\\Service" do
+  values [{
+    name: 'AllowUnencryptedTraffic',
+    type: :dword,
+    data: 0
+  }]
+  action :create
+end
+
+#V-73629 (only for domain controllers)
+registry_key "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\NTDS\\Parameters" do
+  values [{
+    name: 'LDAPServerIntegrity',
+    type: :dword,
+    data: 2
+  }]
+  action :create
+end
+
+#V-73631 (only for domain controllers)
+registry_key "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\Netlogon\\Parameters" do
+  values [{
+    name: 'RefusePasswordChange',
+    type: :dword,
+    data: 0
+  }]
+  action :create
+end
+
+#V-73693
+registry_key "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\LDAP" do
+  values [{
+    name: 'LDAPClientIntegrity',
+    type: :dword,
+    data: 1
+  }]
+  action :create
+end

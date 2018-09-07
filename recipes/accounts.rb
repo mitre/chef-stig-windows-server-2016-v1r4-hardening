@@ -1,5 +1,5 @@
-#V-73809, V-73635
-powershell_script 'V73809, V-73635' do
+#V-73809, V-73625
+powershell_script 'V73809, V-73625' do
   code <<-EOH
   #rename the guest account
   wmic useraccount where "Name='Guest'" rename Gst

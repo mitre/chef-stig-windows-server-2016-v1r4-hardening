@@ -1,4 +1,4 @@
-name 'chef_windows_server_2016_v1rv4_stig_hardening'
+name 'chef_windows_server_2016_v1r4_stig_hardening'
 maintainer 'The Authors'
 maintainer_email 'you@example.com'
 license 'All Rights Reserved'
