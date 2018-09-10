@@ -1,3 +1,4 @@
+#Advanced Auditing all systems
 #V-73413, V-73415 (credential validation)
 #V-73417 Computer Account Management
 #V-73419 - Other Account Management Events
@@ -19,6 +20,7 @@
 #V-73481 - security state change
 #V-73483 - security system extension
 #V-73489, V-73491 - system integrity
+#V-73431 - Plug and Play Events
 
 powershell_script 'V-1113, V-1114' do
   code <<-EOH
@@ -44,5 +46,6 @@ powershell_script 'V-1113, V-1114' do
   Auditpol.exe /set /subcategory:'Account Lockout' /success:Enable /Failure:Enable
   Auditpol.exe /set /subcategory:'Other System Events' /success:Enable /Failure:Enable
   Auditpol.exe /set /subcategory:'Central Policy Staging' /success:Enable /Failure:Enable
+  Auditpol.exe /set /subcategory:'Plug and Play Events ' /success:Enable /Failure:Disable
   EOH
 end

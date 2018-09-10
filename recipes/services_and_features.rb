@@ -1,46 +1,55 @@
-#V-26600
-windows_service 'Fax' do
-  action :disable
-  only_if { ::Win32::Service.exists?("Fax") }
-end
-
-#V-26002 
-
-windows_service 'Web-Ftp-Server ' do
-  action :disable
-  only_if { ::Win32::Service.exists?("Web-Ftp-Server ") }
-end
-
-#V-26004 
-windows_service 'p2pimsvc' do
-  action :disable
-  only_if { ::Win32::Service.exists?("p2pimsvc") }
-end
-
-#V-26606
-windows_service 'tlntsvr ' do
-  action :disable
-  only_if { ::Win32::Service.exists?("tlntsvr ") }
-end
-
-#40206
-powershell_script 'V-40206' do
+#V-73287
+powershell_script 'V-73287' do
   code <<-EOH
-  Set-Service -Name SCPolicySvc -StartupType Automatic
+  Uninstall-WindowsFeature -Name Fax
   EOH
 end
 
-#V-26600
-windows_service 'simptcp ' do
-  action :disable
-  only_if { ::Win32::Service.exists?("simptcp ") }
-end
-
-
-#V-73805 
-powershell_script 'V-1113, V-1114' do
+#V-73289 
+powershell_script 'V-73289' do
   code <<-EOH
- Disable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol -norestart
+  Uninstall-WindowsFeature -Name Web-Ftp-Service
   EOH
 end
 
+#V-73291
+powershell_script 'V-73291' do
+  code <<-EOH
+  Uninstall-WindowsFeature -Name PNRP
+  EOH
+end
+
+#V-73293
+powershell_script 'V-73293' do
+  code <<-EOH
+  Uninstall-WindowsFeature -Name Simple-TCPIP
+  EOH
+end
+
+#V-73295
+powershell_script 'V-73295' do
+  code <<-EOH
+  Uninstall-WindowsFeature -Name Telnet-Client
+  EOH
+end
+
+#V-73297
+powershell_script 'V-73297' do
+  code <<-EOH
+  Uninstall-WindowsFeature -Name TFTP-Client
+  EOH
+end
+
+#V-73299
+powershell_script 'V-73299' do
+  code <<-EOH
+  Uninstall-WindowsFeature -Name FS-SMB1
+  EOH
+end
+
+#V-73301
+powershell_script 'V-73301' do
+  code <<-EOH
+  Uninstall-WindowsFeature -Name PowerShell-v2 
+  EOH
+end
