@@ -1,28 +1,9 @@
-#V-73809, V-73625
-powershell_script 'V73809, V-73625' do
-  code <<-EOH
-  #rename the guest account
-  wmic useraccount where "Name='Guest'" rename Gst
 
-  #disable the guest account
-  net user Gst /active:no
-
-  EOH
-end
-
-#V-73623
-powershell_script 'V-73623' do
-  code <<-EOH
-  #rename the admin account
-  wmic useraccount where "Name='Administrator'" rename Admn
-
-  EOH
-end
 
 #V-73263
 powershell_script 'V-73263' do
   code <<-EOH
-  wmic path win32_useraccount set PasswordExpires=True
+  #wmic path win32_useraccount set PasswordExpires=True
   EOH
 end
 

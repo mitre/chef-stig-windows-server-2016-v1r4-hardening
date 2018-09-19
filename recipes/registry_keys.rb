@@ -1,7 +1,55 @@
+require "chef/mixin/powershell_out"
+::Chef::Recipe.send(:include, Chef::Mixin::PowershellOut)
 
+powershell_script = <<-EOH
+      wmic computersystem get domainrole | Findstr /v DomainRole
+    EOH
 
+result = powershell_out(powershell_script)
 
+if result.stdout.strip != '4' && result.stdout.strip != '5'
 
+  #V-73495
+  registry_key "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System" do
+  values [{
+    name: 'LocalAccountTokenFilterPolicy',
+    type: :dword,
+    data: 0
+  }]
+  action :create
+  end
+
+  #V-73541
+  registry_key "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\Rpc" do
+  values [{
+    name: 'RestrictRemoteClients',
+    type: :dword,
+    data: 1
+  }]
+  action :create
+  end
+  
+  #V-73651
+  registry_key "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon" do
+  values [{
+    name: 'CachedLogonsCount',
+    type: :string,
+    data: 4
+  }]
+  action :create
+  end
+
+  #V-73677
+  registry_key "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa" do
+  values [{
+    name: 'RestrictRemoteSAM',
+    type: :string,
+    data: 'O:BAG:BAD:(A;;RC;;;BA)'
+  }]
+  action :create
+  end
+
+end
 
 
 
@@ -184,77 +232,78 @@ registry_key "HKEY_LOCAL_MACHINE\\System\\Currentcontrolset\\Control\\Lsa" do
 end
 
 
-#V-73707 (add only if server core)
-registry_key "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System" do
-  values [{
-    name: 'FilterAdministratorToken',
-    type: :dword,
-    data: 1
-  }]
-  action :create
-end
+  #V-73707 
+  registry_key "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System" do
+    values [{
+      name: 'FilterAdministratorToken',
+      type: :dword,
+      data: 1
+    }]
+    action :create
+  end
 
-#V-73711 (add only if server core)
-registry_key "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System" do
-  values [{
-    name: 'ConsentPromptBehaviorAdmin',
-    type: :dword,
-    data: 4
-  }]
-  action :create
-end
+  #V-73711 
+  registry_key "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System" do
+    values [{
+      name: 'ConsentPromptBehaviorAdmin',
+      type: :dword,
+      data: 4
+    }]
+    action :create
+  end
 
-#V-73713 (add only if server core)
-registry_key "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System" do
-  values [{
-    name: 'ConsentPromptBehaviorUser',
-    type: :dword,
-    data: 0
-  }]
-  action :create
-end
+  #V-73713 
+  registry_key "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System" do
+    values [{
+      name: 'ConsentPromptBehaviorUser',
+      type: :dword,
+      data: 0
+    }]
+    action :create
+  end
 
-#V-73715 (add only if server core)
-registry_key "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System" do
-  values [{
-    name: 'EnableInstallerDetection',
-    type: :dword,
-    data: 1
-  }]
-  action :create
-end
+  #V-73715 
+  registry_key "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System" do
+    values [{
+      name: 'EnableInstallerDetection',
+      type: :dword,
+      data: 1
+    }]
+    action :create
+  end
 
-#V-73717 (add only if server core)
-registry_key "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System" do
-  values [{
-    name: 'EnableSecureUIAPaths',
-    type: :dword,
-    data: 1
-  }]
-  action :create
-end
+  #V-73717 
+  registry_key "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System" do
+    values [{
+      name: 'EnableSecureUIAPaths',
+      type: :dword,
+      data: 1
+    }]
+    action :create
+  end
 
-#V-73719 (add only if server core)
-registry_key "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System" do
-  values [{
-    name: 'EnableLUA',
-    type: :dword,
-    data: 1
-  }]
-  action :create
-end
+  #V-73719 
+  registry_key "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System" do
+    values [{
+      name: 'EnableLUA',
+      type: :dword,
+      data: 1
+    }]
+    action :create
+  end
 
 
 
-#V-73721 (add only if server core)
-registry_key "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System" do
-  values [{
-    name: 'EnableVirtualization',
-    type: :dword,
-    data: 1
-  }]
-  action :create
-end
+  #V-73721 
+  registry_key "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System" do
+    values [{
+      name: 'EnableVirtualization',
+      type: :dword,
+      data: 1
+    }]
+    action :create
+  end
+
 
 #V-73487
 registry_key "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\CredUI" do
@@ -1082,6 +1131,7 @@ registry_key "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\PowerS
     type: :dword,
     data: 1
   }]
+  recursive true
   action :create
 end
 
@@ -1121,6 +1171,61 @@ registry_key "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\LDAP" do
     name: 'LDAPClientIntegrity',
     type: :dword,
     data: 1
+  }]
+  action :create
+end
+
+require "chef/mixin/powershell_out"
+::Chef::Recipe.send(:include, Chef::Mixin::PowershellOut)
+
+powershell_script = <<-EOH
+      wmic computersystem get domain | FINDSTR /V Domain
+    EOH
+
+result = powershell_out(powershell_script)
+
+
+if result.stdout != 'WORKSTATION'
+  #include_recipe 'chef_windows_server_2016_v1r4_stig_hardening::security_policy'
+
+  #V-73509
+  registry_key "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\NetworkProvider\\HardenedPaths" do
+  values [{
+    name: '\\\\*\\SYSVOL',
+    type: :string,
+    data: 'RequireMutualAuthentication=1, RequireIntegrity=1'
+  }]
+  action :create
+  end
+
+  #V-73509
+  registry_key "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\NetworkProvider\\HardenedPaths" do
+  values [{
+    name: '\\\\*\\NETLOGON',
+    type: :string,
+    data: 'RequireMutualAuthentication=1, RequireIntegrity=1'
+  }]
+  action :create
+  end
+end
+
+#V-73551
+registry_key "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection" do
+  values [{
+    name: 'AllowTelemetry',
+    type: :dword,
+    data: 0
+  }]
+  action :create
+end
+
+
+#V-73695
+registry_key "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Lsa\\MSV1_0" do
+  values [{
+    name: 'NTLMMinClientSec',
+    type: :dword,
+    data: 537395200
   }]
   action :create
 end
