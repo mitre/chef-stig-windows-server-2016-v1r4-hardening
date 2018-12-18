@@ -54,6 +54,12 @@ powershell_script '73451, V-73453' do
   EOH
 end
 
+powershell_script 'logn' do
+  code <<-EOH
+   Auditpol.exe /set /subcategory:'Logon' /success:Enable /Failure:Enable
+  EOH
+end
+
 powershell_script '73455' do
   code <<-EOH
    Auditpol.exe /set /subcategory:'Special Logon' /success:Enable /Failure:Disable 
@@ -139,4 +145,5 @@ powershell_script 'Central Policy Staging' do
   Auditpol.exe /set /subcategory:'Central Policy Staging' /success:Enable /Failure:Enable 
   EOH
 end
+
 

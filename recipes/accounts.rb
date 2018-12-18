@@ -3,7 +3,7 @@
 #V-73263
 powershell_script 'V-73263' do
   code <<-EOH
-  #wmic path win32_useraccount set PasswordExpires=True
+  wmic path win32_useraccount set PasswordExpires=True
   EOH
 end
 

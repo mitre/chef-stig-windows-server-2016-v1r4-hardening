@@ -566,8 +566,7 @@ registry_key "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\
   values [{
     name: 'LegalNoticeCaption',
     type: :multi_string,
-    data: ['DoD Notice and Consent Banner, US Department of Defense Warning
-  Statement, or a site-defined equivalent.']
+    data: ['DoD Notice and Consent Banner']
   }]
   action :create
 end
