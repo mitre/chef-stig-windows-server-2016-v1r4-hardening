@@ -1,6 +1,6 @@
 # windows_2016_v1r4_memberserver_hardening
 
-Chef recipe for hardening Windows2012r2 Member server to the Windows Server 2012/2012 R2 Member Server STIG Release: 12
+Chef recipe for hardening Windows2016r2 Member server to the Windows Server 2016/2016 R2 Member Server STIG Release: 12
 
 ## Versioning and State of Development
 This project uses the [Semantic Versioning Policy](https://semver.org/). 
